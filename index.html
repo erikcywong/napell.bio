@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napell BIO | The World's First Aeroponic Coffee System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        xbg: '#000000',
+                        xcard: '#16181c',
+                        xborder: '#2f3336',
+                        xaccent: '#1d9bf0',
+                        xaccenthover: '#1a8cd8',
+                        xtext: '#e7e9ea',
+                        xtextdim: '#71767b',
+                        xgreen: '#00ba7c',
+                        xorange: '#f97316',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; }
+        body { background: #000; color: #e7e9ea; font-family: 'Inter', sans-serif; }
+        ::selection { background: rgba(29,155,240,0.3); }
+
+        /* Navigation dropdown */
+        .nav-item { position: relative; }
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 8px;
+            background: #16181c;
+            border: 1px solid #2f3336;
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .nav-item:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+        }
+        .nav-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: #e7e9ea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.15s;
+        }
+        .nav-dropdown a:hover {
+            background: rgba(29,155,240,0.1);
+            color: #1d9bf0;
+        }
+        .nav-dropdown .dropdown-label {
+            display: block;
+            padding: 8px 20px 4px;
+            color: #71767b;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hero */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            z-index: 0;
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(29,155,240,0.08) 0%, transparent 70%);
+        }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(29,155,240,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(29,155,240,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+        }
+
+        /* Cards */
+        .feature-card {
+            background: #16181c;
+            border: 1px solid #2f3336;
+            border-radius: 16px;
+            padding: 32px;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-card:hover {
+            border-color: #1d9bf0;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(29,155,240,0.15);
+        }
+        .data-card {
+            background: #16181c;
+            border: 1px solid #2f3336;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        .data-card:hover { border-color: #1d9bf0; }
+
+        /* Glow effect */
+        .glow-accent { text-shadow: 0 0 40px rgba(29,155,240,0.5); }
+        .glow-green { text-shadow: 0 0 30px rgba(0,186,124,0.4); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #2f3336; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* Section divider */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #2f3336, transparent);
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background: #1d9bf0;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover { background: #1a8cd8; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            color: #1d9bf0;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid #1d9bf0;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-outline:hover { background: rgba(29,155,240,0.1); transform: scale(1.02); }
+    </style>
+</head>
+<body class="bg-xbg text-xtext">
+
+    <!-- Top Navigation -->
+    <nav id="navbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #2f3336; transition: background 0.3s;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between;">
+            <!-- Logo -->
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #e7e9ea;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #1d9bf0, #0d8cd4); display: flex; align-items: center; justify-content: center;">
+                    <i class="fa fa-leaf" style="color: #fff; font-size: 16px;"></i>
+                </div>
+                <span style="font-weight: 700; font-size: 17px; letter-spacing: -0.3px;">Napell BIO</span>
+            </a>
+
+            <!-- Nav Links -->
+            <div style="display: flex; align-items: center; gap: 4px;" class="nav-links">
+                <div class="nav-item">
+                    <a href="technology.html" style="display: flex; align-items: center; gap: 4px; padding: 8px 14px; border-radius: 8px; color: #e7e9ea; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s;">
+                        Technology <i class="fa fa-chevron-down" style="font-size: 9px; margin-left: 2px;"></i>
+                    </a>
+                    <div class="nav-dropdown">
+                        <span class="dropdown-label">Systems</span>
+                        <a href="technology.html#aeroponic">Aeroponic System</a>
+                        <a href="technology.html#hydroponic">Hydroponic Innovation</a>
+                        <a href="technology.html#ai-control">AI Environmental Control</a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="smart-farm.html" style="display: flex; align-items: center; gap: 4px; padding: 8px 14px; border-radius: 8px; color: #e7e9ea; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s;">
+                        Smart Farm <i class="fa fa-chevron-down" style="font-size: 9px; margin-left: 2px;"></i>
+                    </a>
+                    <div class="nav-dropdown">
+                        <span class="dropdown-label">IoT & Sensors</span>
+                        <a href="smart-farm.html#sensors">Sensor Network</a>
+                        <a href="smart-farm.html#monitoring">Real-time Monitoring</a>
+                        <a href="smart-farm.html#irrigation">Automated Irrigation</a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="data-analytics.html" style="display: flex; align-items: center; gap: 4px; padding: 8px 14px; border-radius: 8px; color: #e7e9ea; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s;">
+                        Data <i class="fa fa-chevron-down" style="font-size: 9px; margin-left: 2px;"></i>
+                    </a>
+                    <div class="nav-dropdown">
+                        <span class="dropdown-label">Analytics</span>
+                        <a href="data-analytics.html#yield">Yield Analytics</a>
+                        <a href="data-analytics.html#quality">Quality Metrics</a>
+                        <a href="data-analytics.html#environmental">Environmental Data</a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="collaboration.html" style="display: flex; align-items: center; gap: 4px; padding: 8px 14px; border-radius: 8px; color: #e7e9ea; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s;">
+                        Collaboration <i class="fa fa-chevron-down" style="font-size: 9px; margin-left: 2px;"></i>
+                    </a>
+                    <div class="nav-dropdown">
+                        <span class="dropdown-label">Ecosystem</span>
+                        <a href="collaboration.html#upstream">Upstream Partners</a>
+                        <a href="collaboration.html#downstream">Downstream Integration</a>
+                        <a href="collaboration.html#platform">Collaboration Platform</a>
+                    </div>
+                </div>
+
+                <a href="about.html" style="padding: 8px 14px; border-radius: 8px; color: #e7e9ea; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s;">About</a>
+                <a href="contact.html" style="padding: 8px 14px; border-radius: 8px; color: #e7e9ea; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s;">Contact</a>
+
+                <a href="contact.html" class="btn-primary" style="margin-left: 8px; padding: 8px 20px; font-size: 14px;">Get Early Access</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="padding-top: 60px;">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+
+        <div style="position: relative; z-index: 1; text-align: center; max-width: 900px; margin: 0 auto; padding: 0 24px;">
+            <div class="animate-in" style="margin-bottom: 24px;">
+                <span style="display: inline-block; background: rgba(29,155,240,0.15); color: #1d9bf0; padding: 6px 16px; border-radius: 9999px; font-size: 13px; font-weight: 600; border: 1px solid rgba(29,155,240,0.3);">
+                    <i class="fa fa-globe" style="margin-right: 6px;"></i> World's First Aeroponic Coffee System
+                </span>
+            </div>
+
+            <h1 class="animate-in delay-1" style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 28px;">
+                Soil-Based Coffee<br>
+                <span style="color: #71767b; font-weight: 300;">Has Hit a Wall.</span>
+            </h1>
+
+            <p class="animate-in delay-2" style="font-size: clamp(1rem, 2vw, 1.25rem); color: #71767b; line-height: 1.6; max-width: 640px; margin: 0 auto 40px; font-weight: 400;">
+                We're redefining coffee cultivation with precision aeroponic systems — climate-independent, pesticide-free, and 92% more water-efficient. The future of coffee is not in the ground. It's in the data.
+            </p>
+
+            <div class="animate-in delay-3" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="technology.html" class="btn-primary" style="padding: 14px 32px; font-size: 16px;">
+                    Explore the Technology
+                </a>
+                <a href="smart-farm.html" class="btn-outline" style="padding: 14px 32px; font-size: 16px;">
+                    Tour the Smart Farm
+                </a>
+            </div>
+
+            <div class="animate-in delay-4" style="margin-top: 60px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 28px; font-weight: 800; color: #1d9bf0;" class="glow-accent">92%</div>
+                    <div style="font-size: 13px; color: #71767b; margin-top: 4px;">Less Water</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 28px; font-weight: 800; color: #00ba7c;" class="glow-green">365</div>
+                    <div style="font-size: 13px; color: #71767b; margin-top: 4px;">Days/Year Harvest</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 28px; font-weight: 800; color: #f97316;">96</div>
+                    <div style="font-size: 13px; color: #71767b; margin-top: 4px;">QA Flavor Score</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 28px; font-weight: 800; color: #e7e9ea;">0</div>
+                    <div style="font-size: 13px; color: #71767b; margin-top: 4px;">Pesticides</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 1;">
+            <div style="width: 24px; height: 40px; border: 2px solid #2f3336; border-radius: 12px; display: flex; justify-content: center; padding-top: 8px;">
+                <div style="width: 3px; height: 8px; background: #1d9bf0; border-radius: 2px; animation: scrollBounce 2s infinite;"></div>
+            </div>
+        </div>
+        <style>
+            @keyframes scrollBounce {
+                0%, 100% { transform: translateY(0); opacity: 1; }
+                50% { transform: translateY(8px); opacity: 0.3; }
+            }
+        </style>
+    </section>
+
+    <!-- Manifesto Section -->
+    <section style="padding: 100px 24px; max-width: 900px; margin: 0 auto;">
+        <div class="animate-in" style="border-left: 3px solid #1d9bf0; padding-left: 32px;">
+            <p style="font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 300; line-height: 1.5; color: #e7e9ea; font-style: italic;">
+                "What if there was a technology capable of producing Arabica beans in any city — matching or exceeding the flavor of top estate coffees — completely independent of climate and soil? Which part of the industry would it disrupt first?"
+            </p>
+            <p style="margin-top: 20px; color: #71767b; font-size: 14px; font-weight: 500;">— Napell BIO Founding Team</p>
+        </div>
+    </section>
+
+    <div class="section-divider" style="max-width: 900px; margin: 0 auto;"></div>
+
+    <!-- Problem / Revolution Section -->
+    <section style="padding: 100px 24px; max-width: 1200px; margin: 0 auto;">
+        <div class="animate-in" style="text-align: center; margin-bottom: 64px;">
+            <h2 style="font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px;">
+                The Old World Is Collapsing
+            </h2>
+            <p style="font-size: 16px; color: #71767b; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                Traditional coffee cultivation relies on an ecosystem that is irreversibly breaking down.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
+            <div class="feature-card animate-in delay-1">
+                <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(249,115,22,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <i class="fa fa-cloud" style="color: #f97316; font-size: 20px;"></i>
+                </div>
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">Environmental Unsustainability</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #f97316; margin-top: 2px;">‣</span> Climate change shrinking suitable land</li>
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #f97316; margin-top: 2px;">‣</span> 21,000L water per 1kg coffee (traditional)</li>
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #f97316; margin-top: 2px;">‣</span> Soil degradation & deforestation cycle</li>
+                </ul>
+            </div>
+
+            <div class="feature-card animate-in delay-2">
+                <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(29,155,240,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <i class="fa fa-chain-broken" style="color: #1d9bf0; font-size: 20px;"></i>
+                </div>
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">Supply Chain Fragility</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #1d9bf0; margin-top: 2px;">‣</span> Prices volatile due to crop uncertainty</li>
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #1d9bf0; margin-top: 2px;">‣</span> 10,000km supply chains = high risk</li>
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #1d9bf0; margin-top: 2px;">‣</span> Inconsistent quality, impossible to scale</li>
+                </ul>
+            </div>
+
+            <div class="feature-card animate-in delay-3">
+                <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(0,186,124,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <i class="fa fa-bolt" style="color: #00ba7c; font-size: 20px;"></i>
+                </div>
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">The Aeroponic Advantage</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #00ba7c; margin-top: 2px;">‣</span> AI precision: perfect growing environment 365 days</li>
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #00ba7c; margin-top: 2px;">‣</span> Supply chain: 10,000km → 10km</li>
+                    <li style="padding: 6px 0; color: #71767b; font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"><span style="color: #00ba7c; margin-top: 2px;">‣</span> Resource efficiency that aligns with ESG mandates</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Farm Preview Section -->
+    <section style="padding: 100px 24px; background: #0a0a0a;">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+            <div class="animate-in">
+                <span style="color: #1d9bf0; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Smart Farm Operations</span>
+                <h2 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -1px; margin-top: 12px; margin-bottom: 20px; line-height: 1.15;">
+                    Data Is the New<br>Growth Medium
+                </h2>
+                <p style="font-size: 15px; color: #71767b; line-height: 1.7; margin-bottom: 28px;">
+                    Our aeroponic system doesn't just grow coffee — it generates data. Every droplet, every lumen, every ppm of nutrient is measured, logged, and optimized by our IoT sensor network and AI control loops.
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 0 0 36px 0;">
+                    <li style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: #e7e9ea; font-size: 14px;"><span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(29,155,240,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fa fa-check" style="color: #1d9bf0; font-size: 11px;"></i></span> 200+ sensors per farming module</li>
+                    <li style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: #e7e9ea; font-size: 14px;"><span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(29,155,240,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fa fa-check" style="color: #1d9bf0; font-size: 11px;"></i></span> Real-time nutrient fog delivery control</li>
+                    <li style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: #e7e9ea; font-size: 14px;"><span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(29,155,240,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fa fa-check" style="color: #1d9bf0; font-size: 11px;"></i></span> Predictive yield modeling via machine learning</li>
+                    <li style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: #e7e9ea; font-size: 14px;"><span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(29,155,240,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fa fa-check" style="color: #1d9bf0; font-size: 11px;"></i></span> Upstream/downstream API integration</li>
+                </ul>
+                <a href="smart-farm.html" class="btn-primary" style="padding: 12px 28px;">Explore Smart Farm <i class="fa fa-arrow-right" style="margin-left: 8px;"></i></a>
+            </div>
+
+            <div class="animate-in delay-2" style="position: relative;">
+                <!-- IoT Dashboard Preview Mockup -->
+                <div style="background: #16181c; border: 1px solid #2f3336; border-radius: 16px; overflow: hidden;">
+                    <div style="padding: 16px 20px; border-bottom: 1px solid #2f3336; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 14px; font-weight: 600;">Farm Module A-07 — Live Telemetry</span>
+                        <span style="font-size: 11px; color: #00ba7c; background: rgba(0,186,124,0.1); padding: 4px 10px; border-radius: 9999px; display: flex; align-items: center; gap: 6px;"><span style="width: 6px; height: 6px; border-radius: 50%; background: #00ba7c; display: inline-block; animation: pulse 2s infinite;"></span> LIVE</span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                            <div style="background: #0a0a0a; border-radius: 10px; padding: 14px;">
+                                <div style="font-size: 11px; color: #71767b; margin-bottom: 6px;">Fogger Output</div>
+                                <div style="font-size: 22px; font-weight: 700; color: #1d9bf0;">94.7%</div>
+                                <div style="font-size: 11px; color: #00ba7c; margin-top: 4px;"><i class="fa fa-arrow-up"></i> +2.1% from optimal</div>
+                            </div>
+                            <div style="background: #0a0a0a; border-radius: 10px; padding: 14px;">
+                                <div style="font-size: 11px; color: #71767b; margin-bottom: 6px;">Root Zone Temp</div>
+                                <div style="font-size: 22px; font-weight: 700; color: #e7e9ea;">24.3°C</div>
+                                <div style="font-size: 11px; color: #71767b; margin-top: 4px;">Target: 24.0°C</div>
+                            </div>
+                            <div style="background: #0a0a0a; border-radius: 10px; padding: 14px;">
+                                <div style="font-size: 11px; color: #71767b; margin-bottom: 6px;">EC / TDS</div>
+                                <div style="font-size: 22px; font-weight: 700; color: #e7e9ea;">1.8 mS/cm</div>
+                                <div style="font-size: 11px; color: #00ba7c; margin-top: 4px;"><i class="fa fa-check"></i> In range</div>
+                            </div>
+                            <div style="background: #0a0a0a; border-radius: 10px; padding: 14px;">
+                                <div style="font-size: 11px; color: #71767b; margin-bottom: 6px;">O₂ Level</div>
+                                <div style="font-size: 22px; font-weight: 700; color: #00ba7c;">21.4%</div>
+                                <div style="font-size: 11px; color: #71767b; margin-top: 4px;">Optimal root respiration</div>
+                            </div>
+                        </div>
+                        <!-- Mini chart placeholder -->
+                        <div style="background: #0a0a0a; border-radius: 10px; padding: 14px;">
+                            <div style="font-size: 11px; color: #71767b; margin-bottom: 10px;">24h Nutrient Uptake Trend</div>
+                            <div style="height: 60px; display: flex; align-items: flex-end; gap: 3px;">
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 45%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 60%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 55%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 70%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 65%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 80%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 75%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 90%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 85%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #1d9bf0, transparent); height: 95%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #00ba7c, transparent); height: 88%; border-radius: 2px 2px 0 0;"></div>
+                                <div style="flex: 1; background: linear-gradient(to top, #00ba7c, transparent); height: 92%; border-radius: 2px 2px 0 0;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+                </style>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Results Section -->
+    <section style="padding: 100px 24px; max-width: 1200px; margin: 0 auto;">
+        <div class="animate-in" style="text-align: center; margin-bottom: 64px;">
+            <h2 style="font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px;">
+                Proven by Data
+            </h2>
+            <p style="font-size: 16px; color: #71767b; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                Pilot farm results validating the aeroponic approach across efficiency, yield, and quality metrics.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 48px;">
+            <div class="data-card animate-in delay-1">
+                <div style="font-size: 48px; font-weight: 900; color: #1d9bf0; margin-bottom: 8px;" class="glow-accent">92%</div>
+                <div style="font-size: 14px; color: #71767b;">Water Savings vs. Soil</div>
+                <div style="margin-top: 12px; height: 4px; background: #2f3336; border-radius: 2px; overflow: hidden;"><div style="width: 92%; height: 100%; background: #1d9bf0; border-radius: 2px;"></div></div>
+            </div>
+            <div class="data-card animate-in delay-2">
+                <div style="font-size: 48px; font-weight: 900; color: #00ba7c;">3.2<span style="font-size: 24px; font-weight: 600;">x</span></div>
+                <div style="font-size: 14px; color: #71767b;">Annual Yield per m²</div>
+                <div style="margin-top: 12px; height: 4px; background: #2f3336; border-radius: 2px; overflow: hidden;"><div style="width: 76%; height: 100%; background: #00ba7c; border-radius: 2px;"></div></div>
+            </div>
+            <div class="data-card animate-in delay-3">
+                <div style="font-size: 48px; font-weight: 900; color: #f97316;">96</div>
+                <div style="font-size: 14px; color: #71767b;">Professional Blind Taste Score</div>
+                <div style="margin-top: 12px; height: 4px; background: #2f3336; border-radius: 2px; overflow: hidden;"><div style="width: 96%; height: 100%; background: #f97316; border-radius: 2px;"></div></div>
+            </div>
+            <div class="data-card animate-in delay-4">
+                <div style="font-size: 48px; font-weight: 900; color: #e7e9ea;">87%</div>
+                <div style="font-size: 14px; color: #71767b;">CO₂ Emission Reduction</div>
+                <div style="margin-top: 12px; height: 4px; background: #2f3336; border-radius: 2px; overflow: hidden;"><div style="width: 87%; height: 100%; background: #e7e9ea; border-radius: 2px;"></div></div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="data-analytics.html" class="btn-outline" style="padding: 14px 32px; font-size: 15px;">
+                View Full Data Dashboard <i class="fa fa-arrow-right" style="margin-left: 8px;"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Collaboration Teaser -->
+    <section style="padding: 100px 24px; background: #0a0a0a;">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+            <div class="animate-in" style="margin-bottom: 64px;">
+                <h2 style="font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px;">
+                    Built for Collaboration
+                </h2>
+                <p style="font-size: 16px; color: #71767b; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                    From seed suppliers to roasters — our platform connects every node in the coffee value chain through open APIs and real-time data sharing.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; text-align: left;">
+                <div class="feature-card animate-in delay-1">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(29,155,240,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                        <i class="fa fa-truck" style="color: #1d9bf0; font-size: 16px;"></i>
+                    </div>
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Upstream Integration</h3>
+                    <p style="font-size: 14px; color: #71767b; line-height: 1.6;">Connect with nutrient suppliers, equipment manufacturers, and genetics providers through our procurement API.</p>
+                </div>
+                <div class="feature-card animate-in delay-2">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(0,186,124,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                        <i class="fa fa-coffee" style="color: #00ba7c; font-size: 16px;"></i>
+                    </div>
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Downstream Access</h3>
+                    <p style="font-size: 14px; color: #71767b; line-height: 1.6;">Roasters and retailers access real-time yield forecasts, quality reports, and harvest schedules via our developer platform.</p>
+                </div>
+                <div class="feature-card animate-in delay-3">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(249,115,22,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                        <i class="fa fa-plug" style="color: #f97316; font-size: 16px;"></i>
+                    </div>
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Open API Platform</h3>
+                    <p style="font-size: 14px; color: #71767b; line-height: 1.6;">RESTful APIs for sensor data, yield predictions, and environmental telemetry. Webhook support for real-time alerts.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px;">
+                <a href="collaboration.html" class="btn-primary" style="padding: 14px 32px; font-size: 15px;">
+                    Explore Collaboration Platform
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="border-top: 1px solid #2f3336; padding: 60px 24px 40px; background: #000;">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;">
+            <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #1d9bf0, #0d8cd4); display: flex; align-items: center; justify-content: center;">
+                        <i class="fa fa-leaf" style="color: #fff; font-size: 16px;"></i>
+                    </div>
+                    <span style="font-weight: 700; font-size: 17px;">Napell BIO</span>
+                </div>
+                <p style="font-size: 14px; color: #71767b; line-height: 1.6; max-width: 300px;">
+                    Redefining coffee cultivation through precision aeroponic systems. The future of coffee is climate-independent, data-driven, and grown in the city.
+                </p>
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <a href="#" style="width: 36px; height: 36px; border-radius: 50%; background: #16181c; border: 1px solid #2f3336; display: flex; align-items: center; justify-content: center; color: #71767b; transition: all 0.2s; text-decoration: none; font-size: 14px;"><i class="fa fa-linkedin"></i></a>
+                    <a href="#" style="width: 36px; height: 36px; border-radius: 50%; background: #16181c; border: 1px solid #2f3336; display: flex; align-items: center; justify-content: center; color: #71767b; transition: all 0.2s; text-decoration: none; font-size: 14px;"><i class="fa fa-twitter"></i></a>
+                    <a href="#" style="width: 36px; height: 36px; border-radius: 50%; background: #16181c; border: 1px solid #2f3336; display: flex; align-items: center; justify-content: center; color: #71767b; transition: all 0.2s; text-decoration: none; font-size: 14px;"><i class="fa fa-github"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 16px; color: #e7e9ea;">Product</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 10px;"><a href="technology.html" style="color: #71767b; text-decoration: none; font-size: 14px;">Technology</a></li>
+                    <li style="margin-bottom: 10px;"><a href="smart-farm.html" style="color: #71767b; text-decoration: none; font-size: 14px;">Smart Farm</a></li>
+                    <li style="margin-bottom: 10px;"><a href="data-analytics.html" style="color: #71767b; text-decoration: none; font-size: 14px;">Data & Analytics</a></li>
+                    <li style="margin-bottom: 10px;"><a href="collaboration.html" style="color: #71767b; text-decoration: none; font-size: 14px;">Collaboration</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 16px; color: #e7e9ea;">Company</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 10px;"><a href="about.html" style="color: #71767b; text-decoration: none; font-size: 14px;">About Us</a></li>
+                    <li style="margin-bottom: 10px;"><a href="career.html" style="color: #71767b; text-decoration: none; font-size: 14px;">Career</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #71767b; text-decoration: none; font-size: 14px;">Press</a></li>
+                    <li style="margin-bottom: 10px;"><a href="contact.html" style="color: #71767b; text-decoration: none; font-size: 14px;">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 16px; color: #e7e9ea;">Contact</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 10px; color: #71767b; font-size: 14px;"><i class="fa fa-map-marker" style="color: #1d9bf0; margin-right: 8px;"></i> Nanshan, Shenzhen</li>
+                    <li style="margin-bottom: 10px; color: #71767b; font-size: 14px;"><i class="fa fa-wechat" style="color: #1d9bf0; margin-right: 8px;"></i> WeChat: +86-158 0022 2338</li>
+                    <li style="margin-bottom: 10px; color: #71767b; font-size: 14px;"><i class="fa fa-whatsapp" style="color: #1d9bf0; margin-right: 8px;"></i> WhatsApp: +852-9318 8252</li>
+                    <li style="margin-bottom: 10px; color: #71767b; font-size: 14px;"><i class="fa fa-envelope" style="color: #1d9bf0; margin-right: 8px;"></i> erik.wong@napell.bio</li>
+                </ul>
+            </div>
+        </div>
+        <div style="max-width: 1200px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid #2f3336; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 13px; color: #71767b;">© 2026 Napell BIO. All rights reserved.</span>
+            <div style="display: flex; gap: 20px;">
+                <a href="#" style="font-size: 13px; color: #71767b; text-decoration: none;">Privacy</a>
+                <a href="#" style="font-size: 13px; color: #71767b; text-decoration: none;">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0,0,0,0.95)';
+            } else {
+                nav.style.background = 'rgba(0,0,0,0.85)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
